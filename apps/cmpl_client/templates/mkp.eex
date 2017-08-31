@@ -1,0 +1,15 @@
+parameters:
+  items := set<%= data.items %>;
+  resources := set<%= data.resources %>;
+  profit[items] := <%= data.profits %>;
+  capacity[resources] := <%= data.capacities %>;
+  Cost[resources, items] := <%= data.costs %>;
+
+variables:
+  selection[items]: binary;
+
+objectives:
+  profit[]T * selection[] -> max;
+
+constraints:
+  Cost[,] * selection[] <= capacity[];

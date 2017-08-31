@@ -1,4 +1,4 @@
-defmodule DistributedGap.Mixfile do
+defmodule DistributedMkp.Mixfile do
   use Mix.Project
 
   def project do
