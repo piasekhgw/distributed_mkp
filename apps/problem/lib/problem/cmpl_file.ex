@@ -1,9 +1,10 @@
-defmodule CmplClient.ProblemSolver do
-  @moduledoc false
+defmodule Problem.CmplFile do
+  @type t :: String.t
 
-  @executable_timeout Application.get_env(:cmpl_client, :executable_timeout)
+  @cmpl_timeout Application.get_env(:problem, :cmpl_timeout)
 
-  def solve(problem_path) do
+  @spec process!(t) :: Problem.SolutionFile.t | no_return
+  def process!(problem_path) do
     solution_path = Temp.path!(%{suffix: ".csol"})
 
     System
@@ -15,7 +16,7 @@ defmodule CmplClient.ProblemSolver do
     [
       "timeout",
       [
-        Integer.to_string(@executable_timeout),
+        Integer.to_string(@cmpl_timeout),
         "cmpl",
         problem_path,
         "-solution",
@@ -26,5 +27,5 @@ defmodule CmplClient.ProblemSolver do
   end
 
   defp process_command_result({_, 0}, solution_path), do: solution_path
-  defp process_command_result({_, 124}, _), do: :timeout
+  defp process_command_result({_, 124}, _), do: :enoent
 end
