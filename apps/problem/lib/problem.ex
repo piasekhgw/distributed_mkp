@@ -3,8 +3,7 @@ defmodule Problem do
 
   defstruct [:data, :solution]
 
-  @type t :: %__MODULE__{data: data, solution: solution}
-  @type data :: Problem.Data.t
+  @type t :: %__MODULE__{data: Problem.Data.t, solution: solution}
   @type solution :: [non_neg_integer] | :timeout
 
   @spec solve!(t) :: t | no_return
