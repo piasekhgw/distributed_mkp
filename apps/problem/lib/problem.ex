@@ -26,4 +26,27 @@ defmodule Problem do
 
     problems |> List.foldl({[], 0}, collector) |> elem(0)
   end
+
+  @spec calculate_profit(t) :: non_neg_integer
+  def calculate_profit(%{data: data, solution: solution}) do
+    data.profits
+    |> Enum.with_index()
+    |> Enum.filter(fn({_profit, idx}) -> Enum.member?(solution, idx) end)
+    |> List.foldl(0, fn({profit, _idx}, total_profit) -> total_profit + profit end)
+  end
+
+  @spec solution_valid?(t) :: boolean
+  def solution_valid?(%{data: data, solution: solution}) do
+    data.costs
+    |> Enum.map(&calculate_resource_usage(&1, solution))
+    |> Enum.zip(data.capacities)
+    |> Enum.all?(fn({usage, capacity}) -> usage < capacity end)
+  end
+
+  defp calculate_resource_usage(resource_costs, solution) do
+    resource_costs
+    |> Enum.with_index()
+    |> Enum.filter(&Enum.member?(solution, elem(&1, 1)))
+    |> List.foldl(0, &(&2 + elem(&1, 0)))
+  end
 end
