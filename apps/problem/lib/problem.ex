@@ -5,6 +5,7 @@ defmodule Problem do
 
   @type t :: %__MODULE__{data: Problem.Data.t, solution: solution}
   @type solution :: [non_neg_integer] | :timeout
+  @type timeout_count :: non_neg_integer
 
   @spec solve!(t) :: t | no_return
   def solve!(%{data: data} = problem) do
@@ -18,13 +19,14 @@ defmodule Problem do
     data |> Data.split(divider) |> Enum.map(&%__MODULE__{data: &1})
   end
 
-  @spec collect_solution([t]) :: solution
-  def collect_solution(problems) do
+  @spec collect_solution([t], pos_integer, pos_integer) :: {solution, timeout_count}
+  def collect_solution(problems, initial_divider, timeout_divider) do
+    timeout_count = div(length(problems) - initial_divider, timeout_divider - 1)
     collector = fn(%{data: %{profits: p_profits}, solution: p_sol}, {sol, p_offset}) ->
       {sol ++ Enum.map(p_sol, &(&1 + p_offset)), p_offset + length(p_profits)}
     end
 
-    problems |> List.foldl({[], 0}, collector) |> elem(0)
+    {problems |> List.foldl({[], 0}, collector) |> elem(0), timeout_count}
   end
 
   @spec calculate_profit(t) :: non_neg_integer

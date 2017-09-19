@@ -40,7 +40,7 @@ defmodule Dispatcher.Server do
 
     case all_problems_resolved?(flat_problems) do
       true ->
-        GenServer.reply(from, Problem.collect_solution(flat_problems))
+        GenServer.reply(from, Problem.collect_solution(flat_problems, @dividers.initial, @dividers.timeout))
         {:noreply, nil}
       false ->
         {:noreply, new_state}
