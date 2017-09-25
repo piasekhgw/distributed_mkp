@@ -16,7 +16,8 @@ defmodule DistributedMkp.Mixfile do
   # Run "mix help deps" for examples and options.
   defp deps do
     [
-      {:ex_doc, "~> 0.16.3"}
+      {:ex_doc, "~> 0.16.3"},
+      {:distillery, "~> 1.5", runtime: false}
     ]
   end
 end
