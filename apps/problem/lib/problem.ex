@@ -3,13 +3,21 @@ defmodule Problem do
 
   defstruct [:data, :solution]
 
-  @type t :: %__MODULE__{data: Problem.Data.t, solution: solution}
+  @type t :: %__MODULE__{data: Data.t, solution: solution}
   @type solution :: [non_neg_integer] | :timeout
-  @type timeout_count :: non_neg_integer
 
-  @spec solve!(t) :: t | no_return
-  def solve!(%{data: data} = problem) do
-    solution = data |> Data.write!() |> CmplFile.process!() |> SolutionFile.read!()
+  @spec new(Data.profits, Data.capacities, Data.costs) :: t
+  def new(profits, capacities, costs) do
+    %__MODULE__{data: Data.new(profits, capacities, costs)}
+  end
+
+  @spec solve!(t, CmplFile.executable_timeout) :: t | no_return
+  def solve!(%{data: data} = problem, executable_timeout) do
+    solution =
+      data
+      |> Data.write!()
+      |> CmplFile.process!(executable_timeout)
+      |> SolutionFile.read!()
 
     %{problem | solution: solution}
   end
@@ -17,16 +25,6 @@ defmodule Problem do
   @spec split(t, pos_integer) :: [t]
   def split(%{data: data}, divider) do
     data |> Data.split(divider) |> Enum.map(&%__MODULE__{data: &1})
-  end
-
-  @spec collect_solution([t], pos_integer, pos_integer) :: {solution, timeout_count}
-  def collect_solution(problems, initial_divider, timeout_divider) do
-    timeout_count = div(length(problems) - initial_divider, timeout_divider - 1)
-    collector = fn(%{data: %{profits: p_profits}, solution: p_sol}, {sol, p_offset}) ->
-      {sol ++ Enum.map(p_sol, &(&1 + p_offset)), p_offset + length(p_profits)}
-    end
-
-    {problems |> List.foldl({[], 0}, collector) |> elem(0), timeout_count}
   end
 
   @spec calculate_profit(t) :: non_neg_integer
@@ -37,12 +35,16 @@ defmodule Problem do
     |> List.foldl(0, fn({profit, _idx}, total_profit) -> total_profit + profit end)
   end
 
-  @spec solution_valid?(t) :: boolean
-  def solution_valid?(%{data: data, solution: solution}) do
+  @spec valid?(t) :: boolean
+  def valid?(%{solution: nil}) do
+    false
+  end
+
+  def valid?(%{data: data, solution: solution}) do
     data.costs
     |> Enum.map(&calculate_resource_usage(&1, solution))
     |> Enum.zip(data.capacities)
-    |> Enum.all?(fn({usage, capacity}) -> usage < capacity end)
+    |> Enum.all?(fn({usage, capacity}) -> usage <= capacity end)
   end
 
   defp calculate_resource_usage(resource_costs, solution) do

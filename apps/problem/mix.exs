@@ -15,19 +15,17 @@ defmodule Problem.Mixfile do
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {Problem.Application, []}
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:temp, "~> 0.4.3"},
       {:sweet_xml, "~> 0.6.5"},
-      {:ex_doc, "~> 0.16.3"}
+      {:temp, "~> 0.4.3"}
     ]
   end
 end

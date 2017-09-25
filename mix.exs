@@ -15,6 +15,8 @@ defmodule DistributedMkp.Mixfile do
   #
   # Run "mix help deps" for examples and options.
   defp deps do
-    []
+    [
+      {:ex_doc, "~> 0.16.3"}
+    ]
   end
 end

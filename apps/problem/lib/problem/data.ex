@@ -1,20 +1,30 @@
 defmodule Problem.Data do
+  alias Problem.CmplFile
+
   require EEx
 
   defstruct [:profits, :capacities, :costs]
 
   @type t :: %__MODULE__{
-    profits: [pos_integer],
-    capacities: [pos_integer],
-    costs: [[pos_integer]]
+    profits: profits,
+    capacities: capacities,
+    costs: costs
   }
+  @type profits :: [pos_integer]
+  @type capacities :: [pos_integer]
+  @type costs :: [[pos_integer]]
 
   @template_path Application.get_env(:problem, :template_path)
   @template_args [:items, :resources, :profits, :capacities, :costs]
 
   EEx.function_from_file(:defp, :problem_template, @template_path, @template_args)
 
-  @spec write!(t) :: Problem.CmplFile.t | no_return
+  @spec new(profits, capacities, costs) :: t
+  def new(profits, capacities, costs) do
+    %__MODULE__{profits: profits, capacities: capacities, costs: costs}
+  end
+
+  @spec write!(t) :: CmplFile.t | no_return
   def write!(data) do
     problem_path = Temp.path!(%{suffix: ".cmpl"})
     formatted_args = Enum.map(@template_args, &(data |> template_val(&1) |> format_val()))

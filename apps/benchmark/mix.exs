@@ -25,8 +25,7 @@ defmodule Benchmark.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:problem, in_umbrella: true},
-      {:dispatcher, in_umbrella: true}
+      {:problem_group, in_umbrella: true}
     ]
   end
 end

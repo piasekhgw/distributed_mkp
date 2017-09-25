@@ -1,9 +1,9 @@
-defmodule Dispatcher.Mixfile do
+defmodule ProblemGroup.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :dispatcher,
+      app: :problem_group,
       version: "0.1.0",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -15,18 +15,16 @@ defmodule Dispatcher.Mixfile do
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger],
-      mod: {Dispatcher.Application, []}
+      mod: {ProblemGroup.Application, []}
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:problem, in_umbrella: true}
+      {:problem, in_umbrella: true, runtime: false}
     ]
   end
 end
