@@ -27,8 +27,6 @@ end
 release :problem do
   set version: current_version(:problem)
   set applications: [
-    :runtime_tools,
-    sweet_xml: :load,
-    temp: :load
+    :runtime_tools
   ]
 end

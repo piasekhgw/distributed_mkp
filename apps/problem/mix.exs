@@ -24,8 +24,8 @@ defmodule Problem.Mixfile do
 
   defp deps do
     [
-      {:sweet_xml, "~> 0.6.5", runtime: false},
-      {:temp, "~> 0.4.3", runtime: false}
+      {:sweet_xml, "~> 0.6.5"},
+      {:temp, "~> 0.4.3"}
     ]
   end
 end
