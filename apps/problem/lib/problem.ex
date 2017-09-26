@@ -4,7 +4,7 @@ defmodule Problem do
   defstruct [:data, :solution]
 
   @type t :: %__MODULE__{data: Data.t, solution: solution}
-  @type solution :: [non_neg_integer] | :timeout
+  @type solution :: [non_neg_integer] | nil | :timeout
 
   @spec new(Data.profits, Data.capacities, Data.costs) :: t
   def new(profits, capacities, costs) do
@@ -23,12 +23,12 @@ defmodule Problem do
   end
 
   @spec split(t, pos_integer) :: [t]
-  def split(%{data: data}, divider) do
+  def split(%__MODULE__{data: data}, divider) do
     data |> Data.split(divider) |> Enum.map(&%__MODULE__{data: &1})
   end
 
   @spec calculate_profit(t) :: non_neg_integer
-  def calculate_profit(%{data: data, solution: solution}) do
+  def calculate_profit(%__MODULE__{data: data, solution: solution}) do
     data.profits
     |> Enum.with_index()
     |> Enum.filter(fn({_profit, idx}) -> Enum.member?(solution, idx) end)
@@ -36,11 +36,11 @@ defmodule Problem do
   end
 
   @spec valid?(t) :: boolean
-  def valid?(%{solution: nil}) do
+  def valid?(%__MODULE__{solution: nil}) do
     false
   end
 
-  def valid?(%{data: data, solution: solution}) do
+  def valid?(%__MODULE__{data: data, solution: solution}) do
     data.costs
     |> Enum.map(&calculate_resource_usage(&1, solution))
     |> Enum.zip(data.capacities)

@@ -21,7 +21,7 @@ defmodule ProblemGroup do
     group |> List.flatten() |> Enum.all?(&(&1.solution |> is_nil() |> Kernel.not))
   end
 
-  @spec get_at(t, problem_position) :: t
+  @spec get_at(t, problem_position) :: Problem.t
   def get_at(group, problem_position) do
     get_in(group, problem_position)
   end
