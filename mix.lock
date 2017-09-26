@@ -1,5 +1,5 @@
-%{"distillery": {:hex, :distillery, "1.5.1", "7ad7354214959c0f65f57ddd49478c81c3b2733ca2e5ccfb9eb55351108466aa", [], [], "hexpm"},
-  "earmark": {:hex, :earmark, "1.2.3", "206eb2e2ac1a794aa5256f3982de7a76bf4579ff91cb28d0e17ea2c9491e46a4", [], [], "hexpm"},
-  "ex_doc": {:hex, :ex_doc, "0.16.4", "4bf6b82d4f0a643b500366ed7134896e8cccdbab4d1a7a35524951b25b1ec9f0", [], [{:earmark, "~> 1.1", [hex: :earmark, repo: "hexpm", optional: false]}], "hexpm"},
-  "sweet_xml": {:hex, :sweet_xml, "0.6.5", "dd9cde443212b505d1b5f9758feb2000e66a14d3c449f04c572f3048c66e6697", [], [], "hexpm"},
-  "temp": {:hex, :temp, "0.4.3", "b641c3ce46094839bff110fdb64162536d640d9d47ca2c37add9104a2fa3bd81", [], [], "hexpm"}}
+%{"distillery": {:hex, :distillery, "1.5.1", "7ad7354214959c0f65f57ddd49478c81c3b2733ca2e5ccfb9eb55351108466aa", [:mix], [], "hexpm"},
+  "earmark": {:hex, :earmark, "1.2.3", "206eb2e2ac1a794aa5256f3982de7a76bf4579ff91cb28d0e17ea2c9491e46a4", [:mix], [], "hexpm"},
+  "ex_doc": {:hex, :ex_doc, "0.16.4", "4bf6b82d4f0a643b500366ed7134896e8cccdbab4d1a7a35524951b25b1ec9f0", [:mix], [{:earmark, "~> 1.1", [hex: :earmark, repo: "hexpm", optional: false]}], "hexpm"},
+  "sweet_xml": {:hex, :sweet_xml, "0.6.5", "dd9cde443212b505d1b5f9758feb2000e66a14d3c449f04c572f3048c66e6697", [:mix], [], "hexpm"},
+  "temp": {:hex, :temp, "0.4.3", "b641c3ce46094839bff110fdb64162536d640d9d47ca2c37add9104a2fa3bd81", [:mix], [], "hexpm"}}

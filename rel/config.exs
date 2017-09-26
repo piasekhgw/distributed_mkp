@@ -20,8 +20,7 @@ release :benchmark do
   set version: current_version(:benchmark)
   set applications: [
     :runtime_tools,
-    :observer,
-    :wx
+    problem: :load
   ]
 end
 
