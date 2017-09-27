@@ -1,3 +1,3 @@
-# DistributedMkp
+# Distributed Multidimensional Knapsack Problem
 
-**TODO: Add description**
+The source code of https://medium.com/@piasekhgw/multidimensional-knapsack-problem-distributed-218ecf64b0a blogpost
