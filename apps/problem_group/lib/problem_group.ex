@@ -3,8 +3,8 @@ defmodule ProblemGroup do
   @type problem_position :: [Access.access_fun(data :: list, get_value :: term)]
   @type timeout_count :: non_neg_integer
 
-  @spec collect_solution(t, pos_integer) :: {Problem.solution, timeout_count}
-  def collect_solution(group, timeout_divider) do
+  @spec collect_solution(t, pos_integer, pos_integer) :: {Problem.solution, timeout_count}
+  def collect_solution(group, initial_divider, timeout_divider) do
     flat_group = List.flatten(group)
     collector = fn(%{data: %{profits: p_profits}, solution: p_sol}, {sol, p_offset}) ->
       {sol ++ Enum.map(p_sol, &(&1 + p_offset)), p_offset + length(p_profits)}
@@ -12,7 +12,7 @@ defmodule ProblemGroup do
 
     {
       flat_group |> List.foldl({[], 0}, collector) |> elem(0),
-      div(length(flat_group) - length(group), timeout_divider - 1)
+      div(length(flat_group) - initial_divider, timeout_divider - 1)
     }
   end
 

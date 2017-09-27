@@ -34,7 +34,10 @@ defmodule ProblemGroup.Worker do
 
     case ProblemGroup.solved?(new_group) do
       true ->
-        GenServer.reply(from, ProblemGroup.collect_solution(new_group, get_divider(:timeout)))
+        GenServer.reply(
+          from,
+          ProblemGroup.collect_solution(new_group, get_divider(:initial), get_divider(:timeout))
+        )
         {:noreply, nil}
       false ->
         {:noreply, {new_group, from}}
